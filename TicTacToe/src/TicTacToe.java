@@ -8,16 +8,15 @@ public class TicTacToe implements ActionListener {
     JFrame frame = new JFrame();
     JLabel label = new JLabel();
     JPanel panel = new JPanel();
-    JPanel panel1 = new JPanel();
     Font bigFont = new Font("Serif", Font.BOLD, 18);
     Font NewFont = new Font("Comic Sans MS", Font.BOLD, 24);
     JButton[] userButtons = new JButton[9];
     JButton PlayVsPc = new JButton();
     JButton ResetButton = new JButton("RESET");
     boolean gameEnded;
-
     int numberOfMoves = 0;
     int userTurn;
+
     TicTacToe() {
         Random rand = new Random();
         userTurn = rand.nextInt(2);
@@ -35,9 +34,9 @@ public class TicTacToe implements ActionListener {
             userButtons[i].setFocusable(false);
             userButtons[i].setFont(NewFont);
         }
-        if(userTurn==1){
+        if (userTurn == 1) {
             label.setText("X turn");
-        }else{
+        } else {
             label.setText("O turn");
         }
         label.setBounds(0, 0, 400, 50);
@@ -48,9 +47,6 @@ public class TicTacToe implements ActionListener {
         label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.setBounds(0, 60, 400, 300);
         panel.setLayout(new GridLayout(4, 3));
-        //panel1.setLayout(new FlowLayout());
-
-        //panel1.setBounds(500, 500, 100, 100);
         panel.add(userButtons[0]);
         panel.add(userButtons[1]);
         panel.add(userButtons[2]);
@@ -61,86 +57,87 @@ public class TicTacToe implements ActionListener {
         panel.add(userButtons[7]);
         panel.add(userButtons[8]);
         panel.add(PlayVsPc);
-        //panel1.add(PlayVsPc);
+        panel.add(ResetButton);
         frame.add(label);
         frame.add(panel);
-        //frame.add(panel1);
-        frame.setSize(400,400);
+        frame.setSize(400, 400);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setLayout(null);
-        frame.show();
         frame.setVisible(true);
     }
 
 
-
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new TicTacToe();
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == ResetButton){
+        if (e.getSource() == PlayVsPc) {
+            
+        }
+        if (e.getSource() == ResetButton) {
             new TicTacToe();
         }
         for (int i = 0; i < 9; i++) {
             if (e.getSource() == userButtons[i]) {
-                if(gameEnded){
+                if (gameEnded) {
                     break;
                 }
                 if (userTurn == 1) {
-                    if(userButtons[i].getText().isEmpty()) {
+                    if (userButtons[i].getText().isEmpty()) {
+                        userButtons[i].setForeground(Color.red);
                         userButtons[i].setText("X");
                         userTurn = 0;
                         numberOfMoves++;
                         label.setText("O turn");
-                    }else{ label.setText("POSITION TAKEN!");}
+                    } else {
+                        label.setText("POSITION TAKEN!");
+                    }
                 } else {
-                    if(userButtons[i].getText().isEmpty()) {
+                    if (userButtons[i].getText().isEmpty()) {
+                        userButtons[i].setForeground(Color.blue);
                         userButtons[i].setText("O");
                         userTurn = 1;
                         numberOfMoves++;
                         label.setText("X turn");
-                    }else{
+                    } else {
                         label.setText("POSITION TAKEN!");
                     }
                 }
-                if(numberOfMoves>=4) {
+                if (numberOfMoves >= 4) {
                     if (userButtons[0].getText().equals(userButtons[1].getText()) && userButtons[0].getText().equals(userButtons[2].getText())) {
-                        if(!userButtons[0].getText().isEmpty()) {
+                        if (!userButtons[0].getText().isEmpty()) {
                             label.setText(userButtons[0].getText() + " won!!");
                             gameEnded = true;
                         }
                     } else if (userButtons[0].getText().equals(userButtons[3].getText()) && userButtons[0].getText().equals(userButtons[6].getText())) {
-                        if(!userButtons[0].getText().isEmpty()) {
+                        if (!userButtons[0].getText().isEmpty()) {
                             label.setText(userButtons[0].getText() + " won!!");
                             gameEnded = true;
                         }
                     } else if (userButtons[0].getText().equals(userButtons[4].getText()) && userButtons[0].getText().equals(userButtons[8].getText())) {
-                        if(!userButtons[0].getText().isEmpty()) {
+                        if (!userButtons[0].getText().isEmpty()) {
                             label.setText(userButtons[0].getText() + " won!!");
                             gameEnded = true;
                         }
                     } else if (userButtons[3].getText().equals(userButtons[4].getText()) && userButtons[3].getText().equals(userButtons[5].getText())) {
-                        if(!userButtons[3].getText().isEmpty()) {
+                        if (!userButtons[3].getText().isEmpty()) {
                             label.setText(userButtons[3].getText() + " won!!");
                             gameEnded = true;
                         }
                     } else if (userButtons[6].getText().equals(userButtons[7].getText()) && userButtons[6].getText().equals(userButtons[8].getText())) {
-                        if(!userButtons[6].getText().isEmpty()) {
+                        if (!userButtons[6].getText().isEmpty()) {
                             label.setText(userButtons[6].getText() + " won!!");
                             gameEnded = true;
                         }
-
-                    }else{
-                        label.setText("DRAW!");
+                    } else if (numberOfMoves == 9) {
+                        label.setText("DRAW!!!");
                     }
                 }
             }
         }
-
     }
 }
